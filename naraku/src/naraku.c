@@ -1,0 +1,24 @@
+// naraku.c - Implementations of main library functions
+//
+
+#include "stdafx.h"
+#include "naraku.h"
+
+//////////////////////////////////////////////////////////////////////////////
+// Internal-use-only functions
+
+// TODO: Add function implementations here
+
+//////////////////////////////////////////////////////////////////////////////
+// Publicly-exposed functions
+
+void PrintString(const char *pszString)
+{
+  if (pszString == NULL || pszString[0] == '\0') {
+    return;
+  }
+
+  printf("%s\n", pszString);
+}
+
+//////////////////////////////////////////////////////////////////////////////
