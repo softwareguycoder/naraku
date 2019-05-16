@@ -11,7 +11,17 @@
 // Unit tests
 
 BOOL RunShellCode806Test() {
-  ExecShellCode1(SHELLCODE_EXAMPLE_806);
+  HTHREAD hAsyncTask =
+      ExecShellCode1Async(SHELLCODE_EXAMPLE_806);
+
+  AssertIsFalse("RunShellCode806Test",
+      "Failed to start asynchronous shellcode execution task.",
+      INVALID_HANDLE_VALUE == hAsyncTask);
+
+  fprintf(stdout,
+      "RunShellCode806Test: Waiting on the task to complete...\n");
+  WaitThread(hAsyncTask);
+
   return TRUE;
 }
 
