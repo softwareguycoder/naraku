@@ -19,6 +19,8 @@
 
 int main(void) {
 
+  PrintSoftwareTitleAndCopyright();
+
   RunVoidShellCodeTests();
 
   return EXIT_SUCCESS;

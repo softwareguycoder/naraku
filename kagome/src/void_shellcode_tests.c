@@ -8,6 +8,14 @@
 #include "void_shellcode_tests.h"
 
 //////////////////////////////////////////////////////////////////////////////
+// Unit tests
+
+BOOL RunShellCode806Test() {
+  ExecShellCode1(SHELLCODE_EXAMPLE_806);
+  return TRUE;
+}
+
+//////////////////////////////////////////////////////////////////////////////
 // Publicly-exposed functions
 
 void RunVoidShellCodeTests() {
@@ -15,10 +23,10 @@ void RunVoidShellCodeTests() {
   StartUnitTestSession(NULL, NULL, &lpSession);
 
   if (lpSession == NULL) {
-    exit( EXIT_FAILURE );
+    exit( EXIT_FAILURE);
   }
 
-  // TODO: Add unit tests here
+  ExecuteTest(lpSession, "RunShellCode806Test", RunShellCode806Test);
 
-   EndUnitTestSession(&lpSession);
+  EndUnitTestSession(&lpSession);
 }

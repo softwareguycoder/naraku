@@ -4,6 +4,7 @@
 //
 //  - api_core
 //  - common_core
+//  - threading_core
 //
 
 #include "stdafx.h"
@@ -18,7 +19,20 @@
 // Publicly-exposed functions
 
 //////////////////////////////////////////////////////////////////////////////
-// ExecShellCode1
+// ExecShellCode1Async function
+
+HTHREAD ExecShellCode1Async(const char* pszShellCode) {
+  if (IsNullOrWhiteSpace(pszShellCode)) {
+    return INVALID_HANDLE_VALUE;
+  }
+
+  HTHREAD hThread = CreateThreadEx(ExecVoidThreadProc, (void*)pszShellCode);
+
+  return hThread;
+}
+
+//////////////////////////////////////////////////////////////////////////////
+// ExecShellCode1 function
 
 void ExecShellCode1(const char* pszShellCode) {
   if (IsNullOrWhiteSpace(pszShellCode)) {
