@@ -5,6 +5,12 @@
 #define __NARAKU_H__
 
 /**
+ * @brief Function signature template for a shellcode function that takes
+ * no arguments and returns nothing.
+ */
+typedef void (*LPSHELLCODE_VOID_ROUTINE)(void);
+
+/**
  * @name ExecShellCode1
  * @brief Executes shell code for a function that has void return type and
  * takes no arguments.
