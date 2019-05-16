@@ -5,10 +5,12 @@
 #include "stdafx.h"
 #include "naraku.h"
 
+#include "naraku_exec_thread.h"
+
 //////////////////////////////////////////////////////////////////////////////
 // ExecVoidThreadProc fucntion
 
-void *ExecVoidThreadProc(void* pvArgs) {
+void *ExecShellCode1AsyncProc(void* pvArgs) {
   if (pvArgs == NULL) {
     return NULL; // Required parameter
   }

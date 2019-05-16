@@ -10,6 +10,8 @@
 #include "stdafx.h"
 #include "naraku.h"
 
+#include "naraku_exec_thread.h"
+
 //////////////////////////////////////////////////////////////////////////////
 // Internal-use-only functions
 
@@ -26,7 +28,8 @@ HTHREAD ExecShellCode1Async(const char* pszShellCode) {
     return INVALID_HANDLE_VALUE;
   }
 
-  HTHREAD hThread = CreateThreadEx(ExecVoidThreadProc, (void*)pszShellCode);
+  HTHREAD hThread = CreateThreadEx(ExecShellCode1AsyncProc,
+      (void*)pszShellCode);
 
   return hThread;
 }
