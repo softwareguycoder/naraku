@@ -1,5 +1,10 @@
 // naraku.c - Implementations of main library functions
 //
+// This library depends on the following core libraries:
+//
+//  - api_core
+//  - common_core
+//
 
 #include "stdafx.h"
 #include "naraku.h"
@@ -12,13 +17,8 @@
 //////////////////////////////////////////////////////////////////////////////
 // Publicly-exposed functions
 
-void PrintString(const char *pszString)
-{
-  if (pszString == NULL || pszString[0] == '\0') {
-    return;
-  }
+void ExecShellcode1(const char* pszShellCode) {
 
-  printf("%s\n", pszString);
 }
 
 //////////////////////////////////////////////////////////////////////////////
