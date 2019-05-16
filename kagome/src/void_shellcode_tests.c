@@ -18,9 +18,9 @@ BOOL RunShellCode806Test() {
       "Failed to start asynchronous shellcode execution task.",
       INVALID_HANDLE_VALUE == hAsyncTask);
 
-  fprintf(stdout,
+  /*fprintf(stdout,
       "RunShellCode806Test: Waiting on the task to complete...\n");
-  WaitThread(hAsyncTask);
+  WaitThread(hAsyncTask);*/
 
   return TRUE;
 }
