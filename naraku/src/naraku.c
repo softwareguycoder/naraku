@@ -17,7 +17,7 @@
 //////////////////////////////////////////////////////////////////////////////
 // Publicly-exposed functions
 
-void ExecShellcode1(const char* pszShellCode) {
+void ExecShellCode1(const char* pszShellCode) {
 
 }
 
