@@ -16,6 +16,16 @@
 // Main application code
 
 int main(void) {
+  LPTESTSESSION lpSession = NULL;
+  StartUnitTestSession(NULL, NULL, &lpSession);
+
+  if (lpSession == NULL) {
+    return EXIT_FAILURE;
+  }
+
+
+
+  EndUnitTestSession(&lpSession);
 
 	return EXIT_SUCCESS;
 }

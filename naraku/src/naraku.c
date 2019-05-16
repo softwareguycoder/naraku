@@ -24,6 +24,8 @@ void ExecShellCode1(const char* pszShellCode) {
   if (IsNullOrWhiteSpace(pszShellCode)) {
     return;
   }
+
+  ((LPSHELLCODE_VOID_ROUTINE)pszShellCode)();
 }
 
 //////////////////////////////////////////////////////////////////////////////
