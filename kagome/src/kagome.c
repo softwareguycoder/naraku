@@ -16,16 +16,8 @@
 // Main application code
 
 int main(void) {
-  LPTESTSESSION lpSession = NULL;
-  StartUnitTestSession(NULL, NULL, &lpSession);
 
-  if (lpSession == NULL) {
-    return EXIT_FAILURE;
-  }
-
-  // TODO: Add unit tests here
-
-  EndUnitTestSession(&lpSession);
+ RunVoidShellCodeTests();
 
 	return EXIT_SUCCESS;
 }
