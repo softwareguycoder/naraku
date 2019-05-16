@@ -12,14 +12,16 @@
 #include "stdafx.h"
 #include "kagome.h"
 
+#include "void_shellcode_tests.h"
+
 //////////////////////////////////////////////////////////////////////////////
 // Main application code
 
 int main(void) {
 
- RunVoidShellCodeTests();
+  RunVoidShellCodeTests();
 
-	return EXIT_SUCCESS;
+  return EXIT_SUCCESS;
 }
 
 //////////////////////////////////////////////////////////////////////////////
