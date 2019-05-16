@@ -34,7 +34,8 @@ BOOL RunShellCode806Test() {
 
 void RunVoidShellCodeTests() {
   LPTESTSESSION lpSession = NULL;
-  StartUnitTestSession(NULL, VoidShellCodeTestTearDown, &lpSession);
+  StartUnitTestSession(NULL,
+      VoidShellCodeTestTearDown, &lpSession);
 
   if (lpSession == NULL) {
     exit( EXIT_FAILURE);
