@@ -7,20 +7,24 @@
 
 #include "void_shellcode_tests.h"
 
+HTHREAD hAsyncTask = INVALID_HANDLE_VALUE;
+
+//////////////////////////////////////////////////////////////////////////////
+// TearDown function
+
+void VoidShellCodeTestTearDown() {
+  WaitThread(hAsyncTask);
+}
 //////////////////////////////////////////////////////////////////////////////
 // Unit tests
 
 BOOL RunShellCode806Test() {
-  HTHREAD hAsyncTask =
+  hAsyncTask =
       ExecShellCode1Async(SHELLCODE_EXAMPLE_806);
 
   AssertIsFalse("RunShellCode806Test",
       "Failed to start asynchronous shellcode execution task.",
       INVALID_HANDLE_VALUE == hAsyncTask);
-
-  /*fprintf(stdout,
-      "RunShellCode806Test: Waiting on the task to complete...\n");
-  WaitThread(hAsyncTask);*/
 
   return TRUE;
 }
@@ -30,7 +34,7 @@ BOOL RunShellCode806Test() {
 
 void RunVoidShellCodeTests() {
   LPTESTSESSION lpSession = NULL;
-  StartUnitTestSession(NULL, NULL, &lpSession);
+  StartUnitTestSession(NULL, VoidShellCodeTestTearDown, &lpSession);
 
   if (lpSession == NULL) {
     exit( EXIT_FAILURE);
