@@ -12,6 +12,7 @@
 #include "stdafx.h"
 #include "kagome.h"
 
+#include "twoarg_shellcode_tests.h"
 #include "void_shellcode_tests.h"
 
 //////////////////////////////////////////////////////////////////////////////
@@ -21,7 +22,9 @@ int main(void) {
 
   PrintSoftwareTitleAndCopyright();
 
-  RunVoidShellCodeTests();
+  //RunVoidShellCodeTests();
+
+  RunTwoArgShellcodeTests();
 
   return EXIT_SUCCESS;
 }

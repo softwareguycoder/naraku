@@ -29,7 +29,7 @@ HTHREAD ExecShellCode1Async(const char* pszShellCode) {
   }
 
   HTHREAD hThread = CreateThreadEx(ExecShellCode1AsyncProc,
-      (void*)pszShellCode);
+      (void*) pszShellCode);
 
   return hThread;
 }
@@ -42,7 +42,22 @@ void ExecShellCode1(const char* pszShellCode) {
     return;
   }
 
-  ((LPSHELLCODE_VOID_ROUTINE)pszShellCode)();
+  ((LPSHELLCODE_VOID_ROUTINE) pszShellCode)();
 }
 
+//////////////////////////////////////////////////////////////////////////////
+// ExecShellCode3 function
+
+void ExecShellCode3(const char* pszShellCode, int arg1, int arg2,
+    int *pnResult) {
+  if (IsNullOrWhiteSpace(pszShellCode)) {
+    return;
+  }
+
+  if (pnResult == NULL) {
+    return;
+  }
+
+  *pnResult = ((LPSHELLCODE_TWOARG_ROUTINE)pszShellCode)(arg1, arg2);
+}
 //////////////////////////////////////////////////////////////////////////////

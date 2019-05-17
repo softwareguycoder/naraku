@@ -14,9 +14,14 @@ HTHREAD hAsyncTask = INVALID_HANDLE_VALUE;
 
 void VoidShellCodeTestTearDown() {
   WaitThread(hAsyncTask);
+  DestroyThread(hAsyncTask);
 }
+
 //////////////////////////////////////////////////////////////////////////////
 // Unit tests
+
+//////////////////////////////////////////////////////////////////////////////
+// RunShellCode806Test test
 
 BOOL RunShellCode806Test() {
   hAsyncTask =
