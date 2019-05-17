@@ -58,6 +58,6 @@ void ExecShellCode3(const char* pszShellCode, int arg1, int arg2,
     return;
   }
 
-  *pnResult = ((LPSHELLCODE_TWOARG_ROUTINE)pszShellCode)(arg1, arg2);
+  *pnResult = ((LPSHELLCODE_TWOARG_FUNCTION)pszShellCode)(arg1, arg2);
 }
 //////////////////////////////////////////////////////////////////////////////

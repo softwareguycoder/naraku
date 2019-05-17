@@ -19,7 +19,7 @@ typedef void (*LPSHELLCODE_VOID_ROUTINE)(void);
  * @param arg2 Second argument to pass to the shellcode.
  * @return Result of the function (value in EAX).
  */
-typedef int (*LPSHELLCODE_TWOARG_ROUTINE)(int arg1, int arg2);
+typedef int (*LPSHELLCODE_TWOARG_FUNCTION)(int arg1, int arg2);
 
 /**
  * @name ExecShellCode1Async
