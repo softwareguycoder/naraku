@@ -63,4 +63,25 @@ void ExecShellCode1(const char* pszShellCode, int nShellCodeLength);
 void ExecShellCode3(const char* pszShellCode, int nShellCodeLength,
     int arg1, int arg2, int *pnResult);
 
+/**
+ * @name PlaceShellCodeInMemory
+ * @brief Prepares for executing shellcode by placing the code in the correct
+ * location on the heap and then making that region of the heap executable.
+ * @param pszShellCode Address of a buffer containing the bytes of shell code
+ * to be placed.
+ * @param nShellCodeLength Size of the input buffer of shell code, in bytes.
+ * @param ppBuf Address of storage that will receive the address in memory
+ * of the executable instructions.
+ */
+void PlaceShellCodeInMemory(const char* pszShellCode, int nShellCodeLength,
+    void **ppBuf);
+
+/**
+ * @name RemoveShellCodeFromMemory
+ * @brief Removes shell code from the heap.
+ * @param pvShellCode Address on the heap of the shellcode to remove.
+ * @param nShellCodeLength Size, in bytes, of the shellcode.
+ */
+void RemoveShellCodeFromMemory(void *pvShellCode, int nShellCodeLength);
+
 #endif //__NARAKU_H__
