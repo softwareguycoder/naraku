@@ -49,7 +49,7 @@ void ExecShellCode1(const char* pszShellCode, int nShellCodeLength) {
   PlaceShellCodeInMemory(pszShellCode, nShellCodeLength, &pShellCode);
 
   if (pShellCode == NULL) {
-    fprintf(stderr, "ERROR: Failed to place shell code in memory.\n");
+    fprintf(stderr, FAILED_ALLOC_SHELL_CORE_SPACE);
     exit(EXIT_FAILURE);
   }
 
@@ -103,7 +103,7 @@ void PlaceShellCodeInMemory(const char* pszShellCode, int nShellCodeLength,
   MAP_SHARED | MAP_ANONYMOUS, -1, 0);
   if (mem == NULL) {
     fprintf(stderr,
-        "ERROR: Failed to allocate storage on heap for the shell code.\n");
+        FAILED_ALLOC_SHELL_CORE_SPACE);
     exit(EXIT_FAILURE);
   }
 
