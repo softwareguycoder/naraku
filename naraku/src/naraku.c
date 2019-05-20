@@ -76,7 +76,7 @@ void ExecShellCode3(const char* pszShellCode, int nShellCodeLength,
   PlaceShellCodeInMemory(pszShellCode, nShellCodeLength, &pShellCode);
 
   if (pShellCode == NULL) {
-    fprintf(stderr, "ERROR: Failed to place shell code in memory.\n");
+    fprintf(stderr, FAILED_ALLOC_SHELL_CORE_SPACE);
     exit(EXIT_FAILURE);
   }
 

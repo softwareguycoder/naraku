@@ -6,6 +6,8 @@
 
 #include "stdafx.h"
 
+#include "naraku_symbols.h"
+
 /**
  * @brief Function signature template for a shellcode function that takes
  * no arguments and returns nothing.
