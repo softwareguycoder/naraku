@@ -53,7 +53,7 @@ void ExecShellCode1(const char* pszShellCode, int nShellCodeLength) {
     exit(EXIT_FAILURE);
   }
 
-  ((LPSHELLCODE_VOID_ROUTINE) pShellCode)();
+  ((LPSHELLCODE_VOID_ROUTINE)pShellCode)();
 
   RemoveShellCodeFromMemory(pShellCode, nShellCodeLength);
 }

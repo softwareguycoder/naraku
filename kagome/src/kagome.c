@@ -22,9 +22,9 @@ int main(void) {
 
   PrintSoftwareTitleAndCopyright();
 
-  //RunVoidShellCodeTests();
+  RunVoidShellCodeTests();
 
-  RunTwoArgShellcodeTests();
+  //RunTwoArgShellcodeTests();
 
   return EXIT_SUCCESS;
 }
