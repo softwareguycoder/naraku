@@ -36,7 +36,7 @@ typedef int (*LPSHELLCODE_TWOARG_FUNCTION)(int arg1, int arg2);
  * parameter contains a NULL value or a blank string, or a string containing
  * only whitespace characters.
  */
-HTHREAD ExecShellCode1Async(const char* pszShellCode, int nShellCodeLength);
+HTHREAD ExecShellCode1Async(const void* pvShellCode, int nShellCodeLength);
 
 /**
  * @name ExecShellCode1
@@ -47,7 +47,7 @@ HTHREAD ExecShellCode1Async(const char* pszShellCode, int nShellCodeLength);
  * @remarks The function stops if the pszShellCode parameter contains a NULL
  * value, a blank string, or a string containing only whitespace characters.
  */
-void ExecShellCode1(const char* pszShellCode, int nShellCodeLength);
+void ExecShellCode1(const void* pvShellCode, int nShellCodeLength);
 
 /**
  * @name ExecShellCode3
@@ -62,21 +62,21 @@ void ExecShellCode1(const char* pszShellCode, int nShellCodeLength);
  * function.
  * @param pnResult Address of an integer that receives the result returned.
  */
-void ExecShellCode3(const char* pszShellCode, int nShellCodeLength,
+void ExecShellCode3(const void* pvShellCode, int nShellCodeLength,
     int arg1, int arg2, int *pnResult);
 
 /**
  * @name PlaceShellCodeInMemory
  * @brief Prepares for executing shellcode by placing the code in the correct
  * location on the heap and then making that region of the heap executable.
- * @param pszShellCode Address of a buffer containing the bytes of shell code
+ * @param pvShellCode Address of a buffer containing the bytes of shell code
  * to be placed.
  * @param nShellCodeLength Size of the input buffer of shell code, in bytes.
  * @param ppBuf Address of storage that will receive the address in memory
  * of the executable instructions.
  */
-void PlaceShellCodeInMemory(const char* pszShellCode, int nShellCodeLength,
-    void **ppBuf);
+void PlaceShellCodeInMemory(const void* pvShellCode,
+    int nShellCodeLength, void **ppBuf);
 
 /**
  * @name RemoveShellCodeFromMemory
@@ -84,6 +84,6 @@ void PlaceShellCodeInMemory(const char* pszShellCode, int nShellCodeLength,
  * @param pvShellCode Address on the heap of the shellcode to remove.
  * @param nShellCodeLength Size, in bytes, of the shellcode.
  */
-void RemoveShellCodeFromMemory(void *pvShellCode, int nShellCodeLength);
+void RemoveShellCodeFromMemory(const void *pvShellCode, int nShellCodeLength);
 
 #endif //__NARAKU_H__
