@@ -15,6 +15,8 @@
 #include "twoarg_shellcode_tests.h"
 #include "void_shellcode_tests.h"
 
+const char *FILE_PATH = "/proc/cpuinfo";
+
 //////////////////////////////////////////////////////////////////////////////
 // Main application code
 
@@ -22,7 +24,18 @@ int main(void) {
 
   PrintSoftwareTitleAndCopyright();
 
-  RunVoidShellCodeTests();
+  int file_size = 0;
+  char* output = NULL;
+  ReadAllText(FILE_PATH, &output, &file_size);
+
+  fprintf(stdout, "%s\n", output);
+
+  free(output);
+  output = NULL;
+
+  fprintf(stdout, "The file '%s' is %d B in size.\n", FILE_PATH, file_size);
+
+  //RunVoidShellCodeTests();
 
   //RunTwoArgShellcodeTests();
 
