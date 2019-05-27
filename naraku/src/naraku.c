@@ -27,7 +27,7 @@ HTHREAD ExecShellCode1Async(const void* pvShellCode, int nShellCodeLength) {
   }
 
   HTHREAD hThread = CreateThreadEx(ExecShellCode1AsyncProc,
-      pvShellCode);
+      (void*)pvShellCode);
 
   return hThread;
 }
@@ -122,7 +122,7 @@ void PlaceShellCodeInMemory(const void* pvShellCode,
 //////////////////////////////////////////////////////////////////////////////
 // RemoveShellCodeFromMemory function
 
-void RemoveShellCodeFromMemory(const void *pvShellCode, int nShellCodeLength) {
+void RemoveShellCodeFromMemory(void *pvShellCode, int nShellCodeLength) {
   if (pvShellCode == NULL) {
     return;
   }

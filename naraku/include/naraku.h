@@ -84,6 +84,6 @@ void PlaceShellCodeInMemory(const void* pvShellCode,
  * @param pvShellCode Address on the heap of the shellcode to remove.
  * @param nShellCodeLength Size, in bytes, of the shellcode.
  */
-void RemoveShellCodeFromMemory(const void *pvShellCode, int nShellCodeLength);
+void RemoveShellCodeFromMemory(void *pvShellCode, int nShellCodeLength);
 
 #endif //__NARAKU_H__
