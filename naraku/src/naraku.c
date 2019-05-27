@@ -21,13 +21,13 @@
 //////////////////////////////////////////////////////////////////////////////
 // ExecShellCode1Async function
 
-HTHREAD ExecShellCode1Async(const char* pszShellCode, int nShellCodeLength) {
-  if (IsNullOrWhiteSpace(pszShellCode)) {
+HTHREAD ExecShellCode1Async(const void* pvShellCode, int nShellCodeLength) {
+  if (pvShellCode == NULL) {
     return INVALID_HANDLE_VALUE;
   }
 
   HTHREAD hThread = CreateThreadEx(ExecShellCode1AsyncProc,
-      (void*) pszShellCode);
+      pvShellCode);
 
   return hThread;
 }
@@ -35,8 +35,8 @@ HTHREAD ExecShellCode1Async(const char* pszShellCode, int nShellCodeLength) {
 //////////////////////////////////////////////////////////////////////////////
 // ExecShellCode1 function
 
-void ExecShellCode1(const char* pszShellCode, int nShellCodeLength) {
-  if (IsNullOrWhiteSpace(pszShellCode)) {
+void ExecShellCode1(const void* pvShellCode, int nShellCodeLength) {
+  if (pvShellCode == NULL) {
     return;
   }
 
@@ -46,7 +46,7 @@ void ExecShellCode1(const char* pszShellCode, int nShellCodeLength) {
 
   void *pShellCode = NULL;
 
-  PlaceShellCodeInMemory(pszShellCode, nShellCodeLength, &pShellCode);
+  PlaceShellCodeInMemory(pvShellCode, nShellCodeLength, &pShellCode);
 
   if (pShellCode == NULL) {
     fprintf(stderr, FAILED_ALLOC_SHELL_CORE_SPACE);
@@ -61,9 +61,9 @@ void ExecShellCode1(const char* pszShellCode, int nShellCodeLength) {
 //////////////////////////////////////////////////////////////////////////////
 // ExecShellCode3 function
 
-void ExecShellCode3(const char* pszShellCode, int nShellCodeLength,
+void ExecShellCode3(const void* pvShellCode, int nShellCodeLength,
     int arg1, int arg2, int *pnResult) {
-  if (IsNullOrWhiteSpace(pszShellCode)) {
+  if (pvShellCode == NULL) {
     return;
   }
 
@@ -73,7 +73,7 @@ void ExecShellCode3(const char* pszShellCode, int nShellCodeLength,
 
   void *pShellCode = NULL;
 
-  PlaceShellCodeInMemory(pszShellCode, nShellCodeLength, &pShellCode);
+  PlaceShellCodeInMemory(pvShellCode, nShellCodeLength, &pShellCode);
 
   if (pShellCode == NULL) {
     fprintf(stderr, FAILED_ALLOC_SHELL_CORE_SPACE);
@@ -88,8 +88,8 @@ void ExecShellCode3(const char* pszShellCode, int nShellCodeLength,
 //////////////////////////////////////////////////////////////////////////////
 // PlaceShellCodeInMemory function
 
-void PlaceShellCodeInMemory(const char* pszShellCode, int nShellCodeLength,
-    void **ppBuf)
+void PlaceShellCodeInMemory(const void* pvShellCode,
+    int nShellCodeLength, void **ppBuf)
 {
   if (nShellCodeLength <= 0) {
     return;
@@ -107,7 +107,7 @@ void PlaceShellCodeInMemory(const char* pszShellCode, int nShellCodeLength,
     exit(EXIT_FAILURE);
   }
 
-  memcpy(mem, pszShellCode, nShellCodeLength);
+  memcpy(mem, pvShellCode, nShellCodeLength);
 
   if (0 !=
       mprotect(mem, nShellCodeLength, PROT_READ | PROT_WRITE | PROT_EXEC)) {
@@ -122,7 +122,7 @@ void PlaceShellCodeInMemory(const char* pszShellCode, int nShellCodeLength,
 //////////////////////////////////////////////////////////////////////////////
 // RemoveShellCodeFromMemory function
 
-void RemoveShellCodeFromMemory(void *pvShellCode, int nShellCodeLength) {
+void RemoveShellCodeFromMemory(const void *pvShellCode, int nShellCodeLength) {
   if (pvShellCode == NULL) {
     return;
   }
