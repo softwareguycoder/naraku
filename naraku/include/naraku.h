@@ -30,13 +30,16 @@ typedef int (*LPSHELLCODE_TWOARG_FUNCTION)(int arg1, int arg2);
  * execute the shellcode.
  * @param pszShellCode Shell code bytes to be executed.
  * @param nShellCodeLength The number of bytes of shellcode passed.
+ * @param ppShellCodeBytes Address of a storage location that will be filled
+ * with the address of the shellcode block marked as executable with mprotect.
  * @return Handle to the newly-created thread; INVALID_HANDLE_VALUE if an
  * error occurs.
  * @remarks The function returns INVALID_HANDLE_VALUE if the pszShellCode
  * parameter contains a NULL value or a blank string, or a string containing
  * only whitespace characters.
  */
-HTHREAD ExecShellCode1Async(const void* pvShellCode, int nShellCodeLength);
+HTHREAD ExecShellCode1Async(const void* pvShellCode, int nShellCodeLength,
+    void** ppShellCodeBytes);
 
 /**
  * @name ExecShellCode1

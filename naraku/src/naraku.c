@@ -21,13 +21,33 @@
 //////////////////////////////////////////////////////////////////////////////
 // ExecShellCode1Async function
 
-HTHREAD ExecShellCode1Async(const void* pvShellCode, int nShellCodeLength) {
+HTHREAD ExecShellCode1Async(const void* pvShellCode, int nShellCodeLength,
+    void** ppShellCodeBytes) {
   if (pvShellCode == NULL) {
     return INVALID_HANDLE_VALUE;
   }
 
+  if (nShellCodeLength <= 0) {
+    return INVALID_HANDLE_VALUE;
+  }
+
+  if (ppShellCodeBytes == NULL) {
+    return INVALID_HANDLE_VALUE;
+  }
+
+  void *pShellCode = NULL;
+
+  PlaceShellCodeInMemory(pvShellCode, nShellCodeLength, &pShellCode);
+
+  if (pShellCode == NULL) {
+    fprintf(stderr, FAILED_ALLOC_SHELL_CORE_SPACE);
+    exit(EXIT_FAILURE);
+  }
+
+  *ppShellCodeBytes = pShellCode;
+
   HTHREAD hThread = CreateThreadEx(ExecShellCode1AsyncProc,
-      (void*)pvShellCode);
+      (void*) pShellCode);
 
   return hThread;
 }
@@ -53,7 +73,7 @@ void ExecShellCode1(const void* pvShellCode, int nShellCodeLength) {
     exit(EXIT_FAILURE);
   }
 
-  ((LPSHELLCODE_VOID_ROUTINE)pShellCode)();
+  ((LPSHELLCODE_VOID_ROUTINE) pShellCode)();
 
   RemoveShellCodeFromMemory(pShellCode, nShellCodeLength);
 }
@@ -99,13 +119,20 @@ void PlaceShellCodeInMemory(const void* pvShellCode,
     return;
   }
 
-  void *mem = mmap(0, nShellCodeLength, PROT_READ | PROT_WRITE,
-  MAP_SHARED | MAP_ANONYMOUS, -1, 0);
+  //void *mem = mmap(0, nShellCodeLength, PROT_READ | PROT_WRITE,
+  // MAP_SHARED | MAP_ANONYMOUS, -1, 0);
+  const int PAGE_SIZE = 4096;
+
+  /* Allocate a buffer aligned on a page boundary;
+   initial protection is PROT_READ | PROT_WRITE */
+
+  void *mem = aligned_alloc(PAGE_SIZE, 4 * PAGE_SIZE);
   if (mem == NULL) {
     fprintf(stderr,
-        FAILED_ALLOC_SHELL_CORE_SPACE);
+    FAILED_ALLOC_SHELL_CORE_SPACE);
     exit(EXIT_FAILURE);
   }
+  memset(mem, 0, 4 * PAGE_SIZE);
 
   memcpy(mem, pvShellCode, nShellCodeLength);
 

@@ -15,15 +15,7 @@ void *ExecShellCode1AsyncProc(void* pvArgs) {
     return NULL; // Required parameter
   }
 
-  // pvArgs should be a char array of the shell code bytes
-  //
-
-  const char* pszShellCode = (const char*)pvArgs;
-  if (IsNullOrWhiteSpace(pszShellCode)) {
-    return NULL;  // Required parameter; shellcode must not be whitespace
-  }
-
-  ((LPSHELLCODE_VOID_ROUTINE)pszShellCode)();
+  ((LPSHELLCODE_VOID_ROUTINE)pvArgs)();
 
   return NULL;
 }
