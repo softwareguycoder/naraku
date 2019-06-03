@@ -119,8 +119,6 @@ void PlaceShellCodeInMemory(const void* pvShellCode,
     return;
   }
 
-  //void *mem = mmap(0, nShellCodeLength, PROT_READ | PROT_WRITE,
-  // MAP_SHARED | MAP_ANONYMOUS, -1, 0);
   const int PAGE_SIZE = 4096;
 
   /* Allocate a buffer aligned on a page boundary;
