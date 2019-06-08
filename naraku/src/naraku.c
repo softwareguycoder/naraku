@@ -52,6 +52,47 @@ HTHREAD ExecShellCode1Async(const void* pvShellCode, int nShellCodeLength,
   return hThread;
 }
 
+HTHREAD ExecShellCode2Async(const void* pvShellCode, int nShellCodeLength,
+    int nArg1, void** ppShellCodeBytes) {
+  if (pvShellCode == NULL) {
+    return INVALID_HANDLE_VALUE;
+  }
+
+  if (nShellCodeLength <= 0) {
+    return INVALID_HANDLE_VALUE;
+  }
+
+  if (ppShellCodeBytes == NULL) {
+    return INVALID_HANDLE_VALUE;
+  }
+
+  void *pShellCode = NULL;
+
+  PlaceShellCodeInMemory(pvShellCode, nShellCodeLength, &pShellCode);
+
+  if (pShellCode == NULL) {
+    fprintf(stderr, FAILED_ALLOC_SHELL_CORE_SPACE);
+    exit(EXIT_FAILURE);
+  }
+
+  *ppShellCodeBytes = pShellCode;
+
+  LPSHELLCODEUSERSTATE lpUserState = NULL;
+
+  /* Create an instance of SHELLCODEUSERSTATE to pass to the thread.
+   * Notice that we do not marshal the pShellCode pointer across the thread
+   * boundary because the PlaceShellCodeInMemory function, who filled it with
+   * an address, did so with an address of memory already allocated on the
+   * global heap, which all threads can see. */
+  CreateShellCodeUserState(&lpUserState, pShellCode,
+      nShellCodeLength, MarshalInt(nArg1), NULL);
+
+  HTHREAD hThread = CreateThreadEx(ExecShellCode2AsyncProc,
+      (void*)lpUserState);
+
+  return hThread;
+}
+
 //////////////////////////////////////////////////////////////////////////////
 // ExecShellCode1 function
 
@@ -78,17 +119,21 @@ void ExecShellCode1(const void* pvShellCode, int nShellCodeLength) {
   RemoveShellCodeFromMemory(pShellCode, nShellCodeLength);
 }
 
-//////////////////////////////////////////////////////////////////////////////
-// ExecShellCode3 function
+///////////////////////////////////////////////////////////////////////////////
+// ExecShellCode2 function
 
-void ExecShellCode3(const void* pvShellCode, int nShellCodeLength,
-    int arg1, int arg2, int *pnResult) {
+void ExecShellCode2(const void* pvShellCode, int nShellCodeLength,
+    int nArg1, int *pnResult) {
   if (pvShellCode == NULL) {
-    return;
+    return; // Required parameter
+  }
+
+  if (nShellCodeLength <= 0) {
+    return; // Required parameter
   }
 
   if (pnResult == NULL) {
-    return;
+    return; // Required parameter
   }
 
   void *pShellCode = NULL;
@@ -100,7 +145,51 @@ void ExecShellCode3(const void* pvShellCode, int nShellCodeLength,
     exit(EXIT_FAILURE);
   }
 
-  *pnResult = ((LPSHELLCODE_TWOARG_FUNCTION) pShellCode)(arg1, arg2);
+  /* GCC, with the options with which this library is compiled, utilizes
+   * the 64-Bit x86-64 C Calling Convention, which puts the address of the
+   * shellcode into RAX, and the nArg1 value into RDI prior to doing a
+   * CALL RAX instruction.  So, shellcode invoked with this function needs
+   * to look in RDI for the value of the nArg1 variable used here.
+   */
+  *pnResult = ((LPSHELLCODE_ONEARG_FUNCTION) pShellCode)(nArg1);
+
+  RemoveShellCodeFromMemory(pShellCode, nShellCodeLength);
+}
+
+///////////////////////////////////////////////////////////////////////////////
+// ExecShellCode3 function
+
+void ExecShellCode3(const void* pvShellCode, int nShellCodeLength,
+    int nArg1, int nArg2, int *pnResult) {
+  if (pvShellCode == NULL) {
+    return; // Required parameter
+  }
+
+  if (nShellCodeLength <= 0) {
+    return; // Required parameter
+  }
+
+  if (pnResult == NULL) {
+    return; // Required parameter
+  }
+
+  void *pShellCode = NULL;
+
+  PlaceShellCodeInMemory(pvShellCode, nShellCodeLength, &pShellCode);
+
+  if (pShellCode == NULL) {
+    fprintf(stderr, FAILED_ALLOC_SHELL_CORE_SPACE);
+    exit(EXIT_FAILURE);
+  }
+
+  /* GCC, with the options with which this library is compiled, utilizes
+     * the 64-Bit x86-64 C Calling Convention, which puts the address of the
+     * shellcode into RAX, and the nArg1 value into RDI and the value of nArg2
+     * into RSI prior to doing a CALL RAX instruction.  So, shellcode
+     * invoked with this function needs to look in RDI for the value of
+     * the nArg1 variable used here.
+     */
+  *pnResult = ((LPSHELLCODE_TWOARG_FUNCTION) pShellCode)(nArg1, nArg2);
 
   RemoveShellCodeFromMemory(pShellCode, nShellCodeLength);
 }

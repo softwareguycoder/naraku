@@ -7,12 +7,21 @@
 #include "stdafx.h"
 
 #include "naraku_symbols.h"
+#include "shell_code_user_state.h"
 
 /**
  * @brief Function signature template for a shellcode function that takes
  * no arguments and returns nothing.
  */
 typedef void (*LPSHELLCODE_VOID_ROUTINE)(void);
+
+/**
+ * @brief Function signature template for a shellcode function that takes
+ * one integer argument and returns an integer result.
+ * @param arg1 First argument to pass to the shellcode.
+ * @return Result of the function (value in EAX).
+ */
+typedef int (*LPSHELLCODE_ONEARG_FUNCTION)(int arg1);
 
 /**
  * @brief Function signature template for a shellcode function that takes
@@ -42,6 +51,26 @@ HTHREAD ExecShellCode1Async(const void* pvShellCode, int nShellCodeLength,
     void** ppShellCodeBytes);
 
 /**
+ * @name ExecShellCode1Async
+ * @brief Executes shellcode that does not ask for parameters and does not
+ * return an argument.  Launches a separate thread of execution in which to
+ * execute the shellcode.
+ * @param pszShellCode Shell code bytes to be executed.
+ * @param nShellCodeLength The number of bytes of shellcode passed. Must
+ * be a positive integer.
+ * @param nArg1 Integer argument to be passed to the shellcode.
+ * @param ppShellCodeBytes Address of a storage location that will be filled
+ * with the address of the shellcode block marked as executable with mprotect.
+ * @return Handle to the newly-created thread; INVALID_HANDLE_VALUE if an
+ * error occurs.
+ * @remarks The function returns INVALID_HANDLE_VALUE if the pszShellCode
+ * parameter contains a NULL value or a blank string, or a string containing
+ * only whitespace characters.
+ */
+HTHREAD ExecShellCode2Async(const void* pvShellCode, int nShellCodeLength,
+    int nArg1, void** ppShellCodeBytes);
+
+/**
  * @name ExecShellCode1
  * @brief Synchronously executes shell code for a function that has void
  * return type and takes no arguments.
@@ -51,6 +80,20 @@ HTHREAD ExecShellCode1Async(const void* pvShellCode, int nShellCodeLength,
  * value, a blank string, or a string containing only whitespace characters.
  */
 void ExecShellCode1(const void* pvShellCode, int nShellCodeLength);
+
+/**
+ * @name ExecShellCode2
+ * @brief Synchronously executes shell code for a function that returns an
+ * integer value (which it's placed into EAX) and takes one integer arg-
+ * ument.
+ * @param pszShellCode Address of an array of shell code bytes to be executed.
+ * @param nShellCodeLength The number of bytes of shellcode passed.
+ * @param nArg1 First integer argument to push onto the stack of the called
+ * function.
+ * @param pnResult Address of an integer that receives the result returned.
+ */
+void ExecShellCode2(const void* pvShellCode, int nShellCodeLength,
+    int nArg1, int *pnResult);
 
 /**
  * @name ExecShellCode3
