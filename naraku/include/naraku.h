@@ -8,6 +8,7 @@
 
 #include "naraku_symbols.h"
 #include "shell_code_user_state.h"
+#include "shell_code_results.h"
 
 /**
  * @brief Function signature template for a shellcode function that takes

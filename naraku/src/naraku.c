@@ -79,13 +79,15 @@ HTHREAD ExecShellCode2Async(const void* pvShellCode, int nShellCodeLength,
 
   LPSHELLCODEUSERSTATE lpUserState = NULL;
 
+  void* pvArg1 = MarshalBlockToThread(&nArg1, 1 * sizeof(int));
+
   /* Create an instance of SHELLCODEUSERSTATE to pass to the thread.
    * Notice that we do not marshal the pShellCode pointer across the thread
    * boundary because the PlaceShellCodeInMemory function, who filled it with
    * an address, did so with an address of memory already allocated on the
    * global heap, which all threads can see. */
   CreateShellCodeUserState(&lpUserState, pShellCode,
-      nShellCodeLength, MarshalInt(nArg1), NULL);
+      nShellCodeLength, pvArg1, NULL);
 
   HTHREAD hThread = CreateThreadEx(ExecShellCode2AsyncProc,
       (void*)lpUserState);

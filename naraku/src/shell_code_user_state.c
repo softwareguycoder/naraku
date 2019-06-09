@@ -36,7 +36,7 @@ void CreateShellCodeUserState(LPPSHELLCODEUSERSTATE lppResult,
   }
   memset(lpUserState, 0, 1 * sizeof(SHELLCODEUSERSTATE));
 
-  lpUserState->nShellCodeBytes = nShellCodeBytes;
+  lpUserState->nByteCount = nShellCodeBytes;
   lpUserState->pShellCode = pShellCode;
   if (pvArgs != NULL)
     lpUserState->pvArgs = pvArgs;
@@ -69,7 +69,7 @@ void FreeShellCodeUserState(LPPSHELLCODEUSERSTATE lppUserState) {
 ///////////////////////////////////////////////////////////////////////////////
 // GetArgs function
 
-void* GetArgs(LPSHELLCODEUSERSTATE lpUserState) {
+void* GetShellCodeUserStateArgsPointer(LPSHELLCODEUSERSTATE lpUserState) {
   if (!IsShellCodeUserStateValid(lpUserState)) {
     return NULL;
   }
@@ -80,7 +80,7 @@ void* GetArgs(LPSHELLCODEUSERSTATE lpUserState) {
 ///////////////////////////////////////////////////////////////////////////////
 // GetResult function
 
-void* GetResult(LPSHELLCODEUSERSTATE lpUserState) {
+void* GetShellCodeUserStateResultPointer(LPSHELLCODEUSERSTATE lpUserState) {
   if (!IsShellCodeUserStateValid(lpUserState)) {
     return NULL;
   }
@@ -91,7 +91,7 @@ void* GetResult(LPSHELLCODEUSERSTATE lpUserState) {
 ///////////////////////////////////////////////////////////////////////////////
 // GetShellCode function
 
-void* GetShellCode(LPSHELLCODEUSERSTATE lpUserState) {
+void* GetShellCodeUserStateShellCodePointer(LPSHELLCODEUSERSTATE lpUserState) {
   if (!IsShellCodeUserStateValid(lpUserState)) {
     return NULL;
   }
@@ -102,12 +102,12 @@ void* GetShellCode(LPSHELLCODEUSERSTATE lpUserState) {
 ///////////////////////////////////////////////////////////////////////////////
 // GetShellCodeBytes function
 
-int GetShellCodeBytes(LPSHELLCODEUSERSTATE lpUserState) {
+int GetShellCodeUserStateByteCount(LPSHELLCODEUSERSTATE lpUserState) {
   if (!IsShellCodeUserStateValid(lpUserState)) {
     return 0;
   }
 
-  return lpUserState->nShellCodeBytes;
+  return lpUserState->nByteCount;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -122,7 +122,7 @@ BOOL IsShellCodeUserStateValid(LPSHELLCODEUSERSTATE lpUserState) {
     return FALSE;
   }
 
-  if (lpUserState->nShellCodeBytes <= 0) {
+  if (lpUserState->nByteCount <= 0) {
     return FALSE;
   }
 
@@ -132,7 +132,8 @@ BOOL IsShellCodeUserStateValid(LPSHELLCODEUSERSTATE lpUserState) {
 ///////////////////////////////////////////////////////////////////////////////
 // SetArgs function
 
-void SetArgs(LPSHELLCODEUSERSTATE lpUserState, void* pvArgs) {
+void SetShellCodeUserStateArgsPointer(LPSHELLCODEUSERSTATE lpUserState,
+    void* pvArgs) {
   if (!IsShellCodeUserStateValid(lpUserState)) {
     return;
   }
@@ -143,7 +144,8 @@ void SetArgs(LPSHELLCODEUSERSTATE lpUserState, void* pvArgs) {
 ///////////////////////////////////////////////////////////////////////////////
 // SetResult function
 
-void SetResult(LPSHELLCODEUSERSTATE lpUserState, void* pvResult) {
+void SetShellCodeUserStateResultPointer(LPSHELLCODEUSERSTATE lpUserState,
+    void* pvResult) {
   if (!IsShellCodeUserStateValid(lpUserState)) {
     return;
   }
@@ -154,7 +156,8 @@ void SetResult(LPSHELLCODEUSERSTATE lpUserState, void* pvResult) {
 ///////////////////////////////////////////////////////////////////////////////
 // SetShellCode function
 
-void SetShellCode(LPSHELLCODEUSERSTATE lpUserState, void* pShellCode) {
+void SetShellCodeUserStateShellCodePointer(LPSHELLCODEUSERSTATE lpUserState,
+    void* pShellCode) {
   if (!IsShellCodeUserStateValid(lpUserState)) {
     return;
   }
@@ -165,14 +168,15 @@ void SetShellCode(LPSHELLCODEUSERSTATE lpUserState, void* pShellCode) {
 ///////////////////////////////////////////////////////////////////////////////
 // SetShellCodeBytes function
 
-void SetShellCodeBytes(LPSHELLCODEUSERSTATE lpUserState, int nShellCodeBytes) {
+void SetShellCodeUserStateByteCount(LPSHELLCODEUSERSTATE lpUserState,
+    int nByteCount) {
   if (!IsShellCodeUserStateValid(lpUserState)) {
     return;
   }
 
-  if (nShellCodeBytes <= 0) {
+  if (nByteCount <= 0) {
     return;
   }
 
-  lpUserState->nShellCodeBytes = nShellCodeBytes;
+  lpUserState->nByteCount = nByteCount;
 }

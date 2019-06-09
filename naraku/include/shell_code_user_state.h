@@ -6,22 +6,26 @@
 
 typedef struct _tagSHELLCODEUSERSTATE {
   void* pShellCode;
-  int nShellCodeBytes;
+  int nByteCount;
   void* pvArgs;
   void* pvResult;
 } SHELLCODEUSERSTATE, *LPSHELLCODEUSERSTATE, **LPPSHELLCODEUSERSTATE;
 
 void CreateShellCodeUserState(LPPSHELLCODEUSERSTATE lppResult,
-    void *pShellCode, int nShellCodeBytes, void* pvArgs, void* pvResult);
+    void *pShellCode, int nByteCount, void* pvArgs, void* pvResult);
 void FreeShellCodeUserState(LPPSHELLCODEUSERSTATE lppUserState);
-void* GetArgs(LPSHELLCODEUSERSTATE lpUserState);
-void* GetResult(LPSHELLCODEUSERSTATE lpUserState);
-void* GetShellCode(LPSHELLCODEUSERSTATE lpUserState);
-int GetShellCodeBytes(LPSHELLCODEUSERSTATE lpUserState);
+void* GetShellCodeUserStateArgsPointer(LPSHELLCODEUSERSTATE lpUserState);
+void* GetShellCodeUserStateResultPointer(LPSHELLCODEUSERSTATE lpUserState);
+void* GetShellCodeUserStateShellCodePointer(LPSHELLCODEUSERSTATE lpUserState);
+int GetShellCodeUserStateByteCount(LPSHELLCODEUSERSTATE lpUserState);
 BOOL IsShellCodeUserStateValid(LPSHELLCODEUSERSTATE lpUserState);
-void SetArgs(LPSHELLCODEUSERSTATE lpUserState, void* pvArgs);
-void SetResult(LPSHELLCODEUSERSTATE lpUserState, void* pvResult);
-void SetShellCode(LPSHELLCODEUSERSTATE lpUserState, void* pShellCode);
-void SetShellCodeBytes(LPSHELLCODEUSERSTATE lpUserState, int nShellCodeBytes);
+void SetShellCodeUserStateArgsPointer(LPSHELLCODEUSERSTATE lpUserState,
+    void* pvArgs);
+void SetShellCodeUserStateResultPointer(LPSHELLCODEUSERSTATE lpUserState,
+    void* pvResult);
+void SetShellCodeUserStateShellCodePointer(LPSHELLCODEUSERSTATE lpUserState,
+    void* pShellCode);
+void SetShellCodeUserStateByteCount(LPSHELLCODEUSERSTATE lpUserState,
+    int nByteCount);
 
 #endif //__SHELL_CODE_USER_STATE_H__
